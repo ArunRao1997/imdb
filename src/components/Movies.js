@@ -9,25 +9,32 @@ const Movies = () => {
     const [watchList, setWatchList] = useState([])
 
     // Pagination Methods
-    const onNext = ()=>{
-        setPageNum(pageNum+1)
+    const onNext = () => {
+        setPageNum(pageNum + 1)
 
     }
 
-    const onPrev = ()=>{
-        if(pageNum>1){
-            setPageNum(pageNum-1)
+    const onPrev = () => {
+        if (pageNum > 1) {
+            setPageNum(pageNum - 1)
         }
     }
-    
+
     // Watchlist Handlers
 
-    const addToWatchList =(id)=>{
+    const addToWatchList = (id) => {
         const newWatchList = [...watchList, id]
         setWatchList(newWatchList)
-        console.log(watchList)
     }
 
+    const removeFromwatchList = (id) => {
+        const filteredWatchList = watchList.filter((elem) => {
+            return elem != id
+        })
+        setWatchList(filteredWatchList)
+    }
+
+    console.log(watchList)
 
     useEffect(() => {
 
@@ -52,9 +59,18 @@ const Movies = () => {
                     return <div key={movie.id} className='w-[200px] h-[35vh] bg-center bg-cover rounded-xl m-4 md:[40vh] md:w[200px] hover:scale-110 duration-300 relative flex items-end'
                         style={{ backgroundImage: `url(https://image.tmdb.org/t/p/original/t/p/w500/${movie.poster_path})` }}>
 
-                        <div className='text-2xl p-2 bg-gray-900 rounded-2xl absolute right-2 top-2'> 
-                        <div onClick={()=>addToWatchList(movie.id)}> 😍 </div>
-                        </div> 
+                        <div className='text-2xl p-2 bg-gray-900 rounded-2xl absolute right-2 top-2'>
+                            {watchList.includes(movie.id) == false ? (
+                                <div onClick={() => addToWatchList(movie.id)}>
+                                    😍
+                                </div>
+                            ) : (
+                                <div onClick={() => removeFromwatchList(movie.id)}>
+                                    ❌
+                                </div>
+                            )}
+
+                        </div>
 
                         <div className='text-white font-bold text-center w-full bg-gray-900 bg-opacity-60'>
                             {movie.title}
@@ -63,7 +79,7 @@ const Movies = () => {
                 })}
 
             </div>
-            <Pagination pageNum={pageNum} onNext={onNext} onPrev={onPrev}/>
+            <Pagination pageNum={pageNum} onNext={onNext} onPrev={onPrev} />
         </div>
     )
 }
