@@ -7,7 +7,7 @@ const Movies = () => {
     const [movies, setMovies] = useState([])
     const [pageNum, setPageNum] = useState(1)
     const [watchList, setWatchList] = useState([])
-
+    const [hover, SetHover] = useState('')
     // Pagination Methods
     const onNext = () => {
         setPageNum(pageNum + 1)
@@ -36,6 +36,14 @@ const Movies = () => {
 
     console.log(watchList)
 
+    const showButton = (id) => {
+        SetHover(id)
+    }
+
+    const hideButton = () => {
+        SetHover('')
+    }
+
     useEffect(() => {
 
         (function () {
@@ -56,10 +64,16 @@ const Movies = () => {
 
             <div className='flex flex-wrap'>
                 {movies.map((movie) => {
-                    return <div key={movie.id} className='w-[200px] h-[35vh] bg-center bg-cover rounded-xl m-4 md:[40vh] md:w[200px] hover:scale-110 duration-300 relative flex items-end'
+                    return <div
+
+                        onMouseOver={() => showButton(movie.id)}
+                        onMouseLeave={() => hideButton()}
+                        key={movie.id} className='w-[200px] h-[35vh] bg-center bg-cover rounded-xl m-4 md:[40vh] md:w[200px] hover:scale-110 duration-300 relative flex items-end'
                         style={{ backgroundImage: `url(https://image.tmdb.org/t/p/original/t/p/w500/${movie.poster_path})` }}>
 
-                        <div className='text-2xl p-2 bg-gray-900 rounded-2xl absolute right-2 top-2'>
+                        <div className='text-2xl p-2 bg-gray-900 rounded-2xl absolute right-2 top-2'
+                            style={{ display: hover == movie.id ? 'block' : 'none' }}
+                        >
                             {watchList.includes(movie.id) == false ? (
                                 <div onClick={() => addToWatchList(movie.id)}>
                                     😍
