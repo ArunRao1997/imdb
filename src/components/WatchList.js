@@ -6,6 +6,8 @@ const WatchList = () => {
     const [genres, setGenres] = useState([])
     const [currGenre, setCurrGenre] = useState('All Genres')
     const [rating, setRating] = useState(0)
+    const [popularity, setPopularity] = useState(0)
+    const [searchStr, setSearchStr] = useState('')
 
 
     let genreids = {
@@ -66,8 +68,23 @@ const WatchList = () => {
         })
     }
 
-    // Sorting w.r.t Popularity
+    filteredArray = filteredArray.filter((movie) => {
+        return movie.title.toLowerCase().includes(searchStr.toLowerCase())
+    })
 
+
+    // Sorting w.r.t Popularity
+    if (popularity == -1) {
+        filteredArray = filteredArray.sort(function (objA, objB) {
+            return objB.popularity - objA.popularity
+        })
+    }
+
+    if (popularity == 1) {
+        filteredArray = filteredArray.sort(function (objA, objB) {
+            return objA.popularity - objB.popularity
+        })
+    }
 
 
 
@@ -97,6 +114,16 @@ const WatchList = () => {
                 })}
             </div>
 
+            <div className='text-center'>
+                <input
+                    type='text'
+                    className='border bg-gray-200  border-4 text-center p-1 m-2'
+                    placeholder='Search For Movies'
+                    value={searchStr}
+                    onChange={(e) => setSearchStr(e.target.value)}
+                />
+            </div>
+
             <div class='overflow-hidden rounded-lg border border-gray-200 shadow-md m-5'>
                 <table class='w-full border-collapse bg-white text-left text-sm text-gray-500'>
                     <thead class='bg-gray-50'>
@@ -120,10 +147,25 @@ const WatchList = () => {
                                         }}
                                     />
                                 </div>
+
                             </th>
                             <th>
                                 <div className='flex'>
+                                    <img
+                                        src="https://img.icons8.com/external-those-icons-lineal-those-icons/24/000000/external-up-arrows-those-icons-lineal-those-icons-3.png"
+                                        className="mr-1"
+                                        onClick={() => {
+                                            setPopularity(1)
+                                        }}
+                                    />
                                     <div>Popularity</div>
+                                    <img
+                                        src="https://img.icons8.com/external-those-icons-lineal-those-icons/24/000000/external-down-arrows-those-icons-lineal-those-icons-4.png"
+                                        className="ml-1"
+                                        onClick={() => {
+                                            setPopularity(-1)
+                                        }}
+                                    />
                                 </div>
                             </th>
                             <th>
