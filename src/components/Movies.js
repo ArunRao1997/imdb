@@ -25,14 +25,15 @@ const Movies = () => {
     const addToWatchList = (movie) => {
         const newWatchList = [...watchList, movie]
         setWatchList(newWatchList)
-        localStorage.setItem('imdb', JSON.stringify(newWatchList))
+        localStorage.setItem('imdb', JSON.stringify(watchList))
     }
 
-    const removeFromwatchList = (id) => {
-        const filteredWatchList = watchList.filter((elem) => {
-            return elem != id
+    const removeFromwatchList = (movie) => {
+        const filteredWatchList = watchList.filter((m) => {
+            return m.id != movie.id
         })
         setWatchList(filteredWatchList)
+        localStorage.setItem('imdb', JSON.stringify(watchList))
     }
 
     console.log(watchList)
@@ -48,6 +49,11 @@ const Movies = () => {
     useEffect(() => {
 
         (function () {
+
+            let moviesFromWL = localStorage.getItem('imdb')
+            moviesFromWL = JSON.parse(moviesFromWL) || []
+            setWatchList(moviesFromWL)
+
             axios.get(`https://api.themoviedb.org/3/trending/movie/day?api_key=1f85694bd0472fe3f3de828b8e6020b3&page=${pageNum}`).then((res) => {
                 // console.log(res.data.results)
                 setMovies(res.data.results)
@@ -75,12 +81,12 @@ const Movies = () => {
                         <div className='text-2xl p-2 bg-gray-900 rounded-2xl absolute right-2 top-2'
                             style={{ display: hover == movie.id ? 'block' : 'none' }}
                         >
-                            {watchList.includes(movie.id) == false ? (
+                            {watchList.includes(movie) == false ? (
                                 <div onClick={() => addToWatchList(movie)}>
                                     😍
                                 </div>
                             ) : (
-                                <div onClick={() => removeFromwatchList(movie.id)}>
+                                <div onClick={() => removeFromwatchList(movie)}>
                                     ❌
                                 </div>
                             )}
