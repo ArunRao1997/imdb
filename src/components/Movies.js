@@ -22,9 +22,10 @@ const Movies = () => {
 
     // Watchlist Handlers
 
-    const addToWatchList = (id) => {
-        const newWatchList = [...watchList, id]
+    const addToWatchList = (movie) => {
+        const newWatchList = [...watchList, movie]
         setWatchList(newWatchList)
+        localStorage.setItem('imdb', JSON.stringify(newWatchList))
     }
 
     const removeFromwatchList = (id) => {
@@ -75,7 +76,7 @@ const Movies = () => {
                             style={{ display: hover == movie.id ? 'block' : 'none' }}
                         >
                             {watchList.includes(movie.id) == false ? (
-                                <div onClick={() => addToWatchList(movie.id)}>
+                                <div onClick={() => addToWatchList(movie)}>
                                     😍
                                 </div>
                             ) : (
