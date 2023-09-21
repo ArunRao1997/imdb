@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/imdb/static/css/main.92fcf4ee.css",
+    "main.js": "/imdb/static/js/main.95fc8bcc.js",
+    "static/media/MovieLogo.png": "/imdb/static/media/MovieLogo.4da802fbe5272801fffa.png",
+    "index.html": "/imdb/index.html",
+    "main.92fcf4ee.css.map": "/imdb/static/css/main.92fcf4ee.css.map",
+    "main.95fc8bcc.js.map": "/imdb/static/js/main.95fc8bcc.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.92fcf4ee.css",
+    "static/js/main.95fc8bcc.js"
+  ]
+}
